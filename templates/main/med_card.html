@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+
+{% block body %}
+
+<div class="container mt-5 pt-5" >
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3 mb-3 ml-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-9 ">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="mb-5">{% if not is_authenticated %}hello{% endif %}</h2>
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec ultrices dui sapien eget mi proin sed libero. Sodales ut etiam sit amet nisl purus in. Leo integer malesuada nunc vel risus commodo viverra. Egestas erat imperdiet sed euismod. Adipiscing elit pellentesque habitant morbi tristique senectus et netus. A cras semper auctor neque vitae tempus. Amet purus gravida quis blandit turpis cursus.</p>
+              <p class="text-end text-muted mt-5 mb-0"> 07.09.2022 </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3 mb-3 ml-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-9 ">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+
+              <h2 class="mb-5">Lorem ipsum dolor</h2>
+              <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec ultrices dui sapien eget mi proin sed libero. Sodales ut etiam sit amet nisl purus in. Leo integer malesuada nunc vel risus commodo viverra. Egestas erat imperdiet sed euismod. Adipiscing elit pellentesque habitant morbi tristique senectus et netus. A cras semper auctor neque vitae tempus. Amet purus gravida quis blandit turpis cursus.</p>
+                <p class="text-end text-muted mt-5 mb-0"> 07.09.2022 </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

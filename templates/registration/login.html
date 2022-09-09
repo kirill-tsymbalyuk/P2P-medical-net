@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+    {% load crispy_forms_tags %}
+    <div class="container mt-5 pt-5" xmlns="http://www.w3.org/1999/html">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-5">Enter in your account</h2>
+                                {% if form.errors %}
+                                    <p>Your username and password didn't match. Please try again.</p>
+                                {% endif %}
+                                <form method="post" action="{% url 'login' %}">
+                                    {% csrf_token %}
+                                    <div class="form-outline mb-4">
+                                        {{ form.username|as_crispy_field }}
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        {{ form.password|as_crispy_field }}
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <input type="submit"
+                                                class="btn btn-primary btn-block btn-lg" value="Log in">
+                                    </div>
+                                    <p class="text-center text-muted mt-5 mb-0">No account?<a href="{% url 'home' %}" class="fw-bold text-body"><u>Create</u></a>
+                                    </p>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
