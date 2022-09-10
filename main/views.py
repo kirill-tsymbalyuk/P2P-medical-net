@@ -4,11 +4,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.contrib.auth.models import Group
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, FileResponse
 from django.contrib import auth
-from .forms import UserForm
+from .forms import *
 import json
 from .models import *
+import qrcode
+import io
 
 
 def is_in_group(user, group_name):
@@ -51,6 +53,51 @@ def registration(request):
     return render(request, 'registration/registration.html', {'form': form, 'error': error})
 
 
+def login(request):
+    errors = ""
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/profile/")
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = auth.authenticate(request, username=form.cleaned_data.get("username"),
+                                     password=form.cleaned_data.get("password"))
+            if user is not None:
+                auth.login(request, user)
+                return HttpResponseRedirect("/profile/")
+            else:
+                errors = "Authorization failed, incorrect username or password"
+    else:
+        form = LoginForm()
+    return render(request, 'main/login.html', {"form": form, "errors": errors})
+
+
+def profile(request):
+    if request.method == "POST":
+        form = ProfileImageForm(request.POST)
+        if form.is_valid():
+            img = form.cleaned_data['img']
+    else:
+        form = ProfileImageForm()
+    return render(request, 'main/profile.html', {"img": UserUpgrade.objects.get(user=request.user).img, 'form': form})
+
+
+def download_qrcode(request):
+    code = qrcode.make(Token.objects.get(user=request.user))
+    buff = io.BytesIO()
+    code.save(buff, 'png')
+    file = io.BytesIO(buff.getvalue())
+    file.name = 'qr-code.png'
+    return FileResponse(file)
+
+
+def med_card(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login/')
+
+    return render(request, 'main/med_card.html', {'cards': Card.objects.filter(patient=request.user.id)})
+
+
 @api_view(['GET', 'POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -77,6 +124,3 @@ def set_data(request):
 
     return Response("Method is not allowed")
 
-
-def profile(request):
-    return render(request, 'main/med_card.html')

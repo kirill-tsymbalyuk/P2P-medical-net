@@ -24,3 +24,21 @@ class Card(models.Model):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class UserUpgrade(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to='media/profile-img/', default="media/profile-img/person-icon.png")
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = 'Расширение'
+        verbose_name_plural = 'Расширения'
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserUpgrade.objects.create(user=instance)
