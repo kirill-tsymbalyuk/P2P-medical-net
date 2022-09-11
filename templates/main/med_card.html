@@ -4,6 +4,7 @@
 {% block body %}
 
 <div class="container mt-5 pt-5" >
+{% if cards %}
 {%  for card in cards %}
   <div class="mask d-flex align-items-center h-100 gradient-custom-3 mb-3 ml-3">
     <div class="container h-100">
@@ -21,5 +22,8 @@
     </div>
   </div>
 {% endfor %}
+{% else %}
+<h4 style="text-align: center; margin-top: 25%;">🔍 No data here 🔍</h4>
+{% endif %}
 </div>
 {% endblock %}

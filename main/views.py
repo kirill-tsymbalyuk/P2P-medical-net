@@ -27,25 +27,25 @@ def index(request):
 def registration(request):
 
     if request.user.is_authenticated:
-        return HttpResponseRedirect("/accounts/profile/")
+        return HttpResponseRedirect("/profile/")
 
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data.get("name")
+            username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            mail = form.cleaned_data.get("mail")
+            email = form.cleaned_data.get("email")
             for user in User.objects.all():
-                if user.username == name:
+                if user.username == username:
                     error = 'This username already exists'
-                    return render(request, 'registration/registration.html', {'form': form, 'error': error})
-                if user.email == mail:
+                    return render(request, 'registration/registration.html', {'form': form, 'errors': error})
+                if user.email == email:
                     error = 'This mail already exists'
-                    return render(request, 'registration/registration.html', {'form': form, 'error': error})
-            user = User.objects.create_user(name, mail, password)
+                    return render(request, 'registration/registration.html', {'form': form, 'errors': error})
+            user = User.objects.create_user(username, email, password)
             user.save()
             auth.login(request, user)
-        return HttpResponseRedirect('/accounts/profile/')
+        return HttpResponseRedirect('/profile/')
 
     else:
         form = UserForm()
@@ -73,13 +73,11 @@ def login(request):
 
 
 def profile(request):
-    if request.method == "POST":
-        form = ProfileImageForm(request.POST)
-        if form.is_valid():
-            img = form.cleaned_data['img']
-    else:
-        form = ProfileImageForm()
-    return render(request, 'main/profile.html', {"img": UserUpgrade.objects.get(user=request.user).img, 'form': form})
+    if request.method == 'POST' and request.FILES['img']:
+        obj = UserUpgrade.objects.get(user=request.user)
+        obj.img = request.FILES['img']
+        obj.save()
+    return render(request, 'main/profile.html', {"img": UserUpgrade.objects.get(user=request.user).img})
 
 
 def download_qrcode(request):

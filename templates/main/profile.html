@@ -10,12 +10,17 @@
 
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="rounded-circle mb-2" src="/{{ img }}"
+                    <img class="rounded-circle mb-2" src="/media/{{ img }}"
                          style="width: 315px ; height: 315px " alt="">
                     <!-- Profile picture help block-->
-                    <div class="text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p><input type="file" name="img" accept=".jpg, .jpeg, .png" size="5MB"></p>
+                        <button type="submit" class="btn btn-primary">Upload new photo</button>
+                    </form>
+
                     <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button">Upload new image</button>
                 </div>
             </div>
         </div>
@@ -27,17 +32,21 @@
 
 
                 <div class="card-body">
-                        <div class="mb-3">
-                            <p class="mb-1 form-label">Username (how your name will appear to
-                                other users on the site)</p>
-                            {{ user.username }}
-                        </div>
+                    <div class="mb-3">
+                        <p class="mb-1 form-label">Username (how your name will appear to
+                            other users on the site)</p>
+                        {{ user.username }}
+                    </div>
 
-                        <div class="mb-3">
-                            <p class="mb-1 form-label">Email address</p>
-                            {{ user.email }}
-                        </div>
-                        <a href="{% url 'download-qrcode' %}" download><button type="button" class="btn btn-primary">Download QR-code</button></a>
+                    <div class="mb-3">
+                        <p class="mb-1 form-label">Email address</p>
+                        {{ user.email }}
+                    </div>
+                    <a href="{% url 'download-qrcode' %}" download>
+                        <button type="button" class="btn btn-primary">Download QR-code</button></a>
+                    <a href="{% url 'med-card' %}">
+                        <button type="button" class="btn btn-primary">Get card</button>
+                    </a>
                 </div>
             </div>
         </div>

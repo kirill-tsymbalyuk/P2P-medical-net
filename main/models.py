@@ -28,7 +28,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 class UserUpgrade(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    img = models.ImageField(upload_to='media/profile-img/', default="media/profile-img/person-icon.png")
+    img = models.ImageField(upload_to='profile-img/', default="profile-img/person-icon.png")
 
     def __str__(self):
         return self.user.username
@@ -41,4 +41,4 @@ class UserUpgrade(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserUpgrade.objects.create(user=instance)
+        UserUpgrade.objects.create(user=instance, img="profile-img/person-icon.png")
