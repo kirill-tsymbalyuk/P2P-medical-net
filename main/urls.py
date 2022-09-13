@@ -9,7 +9,7 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('med-card/', med_card, name='med-card'),
     path('profile/', profile, name='profile'),
-    path('download-qrcode/', download_qrcode, name='download-qrcode'),
+    path('get-qrcode/', download_qrcode, name='get-qrcode'),
     path('registration/', registration, name='registration'),
     path('api/', include('rest_framework.urls')),
     path('api/get-history/', get_history),

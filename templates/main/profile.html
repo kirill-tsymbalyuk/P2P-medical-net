@@ -16,7 +16,7 @@
 
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <p><input type="file" name="img" accept=".jpg, .jpeg, .png" size="5MB"></p>
+                        <p><input class="form-control" type="file" name="img" accept=".jpg, .jpeg, .png" size="5MB"></p>
                         <button type="submit" class="btn btn-primary">Upload new photo</button>
                     </form>
 
@@ -33,17 +33,23 @@
 
                 <div class="card-body">
                     <div class="mb-3">
-                        <p class="mb-1 form-label">Username (how your name will appear to
-                            other users on the site)</p>
-                        {{ user.username }}
+                        <p class="mb-1 text-muted">Username</p>
+                        <b>{{ user.username }}</b>
                     </div>
 
                     <div class="mb-3">
-                        <p class="mb-1 form-label">Email address</p>
-                        {{ user.email }}
+                        <p class="mb-1 text-muted">Email address</p>
+                        <b>{{ user.email }}</b>
                     </div>
-                    <a href="{% url 'download-qrcode' %}" download>
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted">QR code</p>
+                        <img class="mb-2" src="http://qrcoder.ru/code/?https%3A%2F%2Fpytorch.org%2F&4&0"
+                             style="width: 315px ; height: 315px " alt="">
+                    </div>
+                    <a href="{% url 'get-qrcode' %}" download>
                         <button type="button" class="btn btn-primary">Download QR-code</button></a>
+                    {#                    <a href="{% url 'get-qrcode' %}">#}
+                    {#                        <button type="button" class="btn btn-primary">Open QR-code in Web</button></a>#}
                     <a href="{% url 'med-card' %}">
                         <button type="button" class="btn btn-primary">Get card</button>
                     </a>
