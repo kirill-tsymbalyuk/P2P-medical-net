@@ -12,9 +12,9 @@
                                 <h2 class="text-uppercase text-center mb-5">Create account</h2>
 
                                 {% if form.errors %}
-                                    <p>Your username and password didn't match. Please try again.</p>
+                                    <p class="text-danger">Your username and password didn't match. Please try again.</p>
                                 {% endif %}
-                                <p>{{ errors }}</p>
+                                <p class="text-danger">{{ errors }}</p>
                                 <form method="post" action="{% url 'registration' %}">
                                     {% csrf_token %}
                                     <div class="form-outline mb-4">
